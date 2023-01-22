@@ -10,9 +10,13 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  getMovieDetails(): Observable<Object>
+  getMovieDetails(id = 'tt3896198'): Observable<Object>
   {
-    //id = 3896198;
-    return this.http.get(`${environment.baseUrl}?i=tt3896198&apikey=${environment.apiKey}`); // pravy alt+ý
+    return this.http.get(`${environment.baseUrl}?i=${id}&apikey=${environment.apiKey}`); // pravy alt+ý
+  }
+
+  searchMovies(title = 'jurassic'): Observable<Object>
+  {
+    return this.http.get(`${environment.baseUrl}?s=${title}&apikey=${environment.apiKey}`);
   }
 }
