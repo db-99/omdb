@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   apiKey: 'f0cdb19f',
-  baseUrl: 'http://www.omdbapi.com/',
-  posterUrl: 'http://img.omdbapi.com/'
+  baseUrl: 'https://www.omdbapi.com/',
+  posterUrl: 'https://img.omdbapi.com/'
 };
 
 /*

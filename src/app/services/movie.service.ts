@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class MovieService {
 
   getMovieDetails(): Observable<Object>
   {
-    return this.http.get('');
+    //id = 3896198;
+    return this.http.get(`${environment.baseUrl}?i=tt3896198&apikey=${environment.apiKey}`); // pravy alt+ý
   }
 }
