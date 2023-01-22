@@ -5,5 +5,18 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let item of movies">
+      
+      <ion-thumbnail slot="start">
+        <ion-img [src]="item.Poster"></ion-img>
+      </ion-thumbnail>
 
+      <ion-label>
+        {{ item.Title }}
+        <p>{{ item.Year }}</p>
+      </ion-label>
+      
+    </ion-item>
+  </ion-list>
 </ion-content>
