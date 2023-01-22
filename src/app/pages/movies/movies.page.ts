@@ -15,6 +15,7 @@ export class MoviesPage implements OnInit {
       console.log(res);
     });*/
     this.movieService.searchMovies().subscribe((res) => {
+      //console.log(res.totalResults);  // interfacem se tohle umoznilo
       console.log(res);
     });
   }
