@@ -1,9 +1,43 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>movieDetails</ion-title>
+  <ion-toolbar color="success">
+    <ion-title> {{ movie?.Title }} </ion-title><!-- problem kdyz je null, proto ? ""-->
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="movie"><!--only display card if movie is set-->
+    <img [src]="movie.Poster"/>
 
+    <ion-card-header>
+      <ion-card-title> {{ movie.Title }} </ion-card-title>
+      <ion-card-subtitle> {{ movie.Year }} </ion-card-subtitle>
+      <ion-text color="tertiary">
+        <span *ngFor="let r of movie.Ratings; let isLast = last"><!--prochazet ratingy, pro kazdy vypsat zdroj + hodnotu-->
+          {{ r.Source + ": " + r.Value }} {{ !isLast ? ' - ' : '' }}<!--oddelit pomlckou, dokud nenarazi na posledni (isLast property)-->
+        </span>
+      </ion-text>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label color="medium"> {{ movie.Plot }} </ion-label>
+
+      <ion-item lines="none">
+        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+        <ion-label> {{ movie.Year }} </ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label> {{ movie.BoxOffice }} </ion-label><!--mozna zmenit obe ikony?-->
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+<!-- moc nefunguje na mobilu, viz movie-details.page.ts
+<ion-footer>
+  <ion-button expand="full" (click)="openWebsite()">
+    Open movie website
+  </ion-button>
+</ion-footer>-->

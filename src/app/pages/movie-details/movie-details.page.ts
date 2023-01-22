@@ -8,6 +8,7 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./movie-details.page.scss'],
 })
 export class MovieDetailsPage implements OnInit {
+  movie:any = null; // movie = null by akceptovalo jenom null, pak misto any predelat na vhodny objekt
 
   // inject the current activatedroute - we get information about the part after /
   constructor(private route: ActivatedRoute, private movieService: MovieService) { }
@@ -17,7 +18,14 @@ export class MovieDetailsPage implements OnInit {
     console.log(id);
     this.movieService.getMovieDetails(id).subscribe(res => {
       console.log(res);
+      this.movie = res;
     })
   }
+
+  // moc nefunguje na mobilu, nativni veci pres capacitor
+  /*openWebsite()
+  {
+    window.open(this.movie.Website);
+  }*/
 
 }
