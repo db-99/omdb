@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { MovieService } from 'src/app/services/movie.service';
+import { MovieService, Search } from 'src/app/services/movie.service';
 
 @Component({
   selector: 'app-movies',
@@ -8,7 +8,7 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./movies.page.scss'],
 })
 export class MoviesPage implements OnInit {
-  searchResults = [];
+  movies: Search[] = [];  // import search a nahrada movies = []
   currentPage = 1;
   title = 'jurassic';
 
@@ -30,6 +30,7 @@ export class MoviesPage implements OnInit {
     });*/
     this.movieService.searchMovies(this.title, this.currentPage).subscribe((res) => {
       loading.dismiss();  // po nacteni odebrat nacitaci obrazovku
+      this.movies = [...this.movies, ...res.Search];  // nefunguje, vyresit
       //console.log(res.totalResults);  // interfacem se tohle umoznilo
       console.log(res);
     });
