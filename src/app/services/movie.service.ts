@@ -63,7 +63,7 @@ export class MovieService {
     return this.http.get(`${environment.baseUrl}?apikey=${environment.apiKey}&i=${id}`); // pravy alt+ý
   }
 
-  searchMovies(title = 'jurassic', page = 1): Observable<SearchResult>
+  getSearchResults(title = 'jurassic', page = 1): Observable<SearchResult>
   {
     return this.http.get<SearchResult>(`${environment.baseUrl}?apikey=${environment.apiKey}&s=${title}&page=${page}`);
   }

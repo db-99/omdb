@@ -28,7 +28,7 @@ export class MoviesPage implements OnInit {
     /*this.movieService.getMovieDetails().subscribe((res) => {
       console.log(res);
     });*/
-    this.movieService.searchMovies(this.title, this.currentPage).subscribe((res) => {
+    this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
       loading.dismiss();  // po nacteni odebrat nacitaci obrazovku
       //this.movies = [...this.movies, ...res.Search];  // nefunguje, vyresit
       this.movies.push(...res.Search);
