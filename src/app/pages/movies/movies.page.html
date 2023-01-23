@@ -1,11 +1,29 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Search results</ion-title>
-    <ion-input placeholder="Search movies..." [(ngModel)]="title"></ion-input>
+    <ion-searchbar placeholder="Search movies..." (ionChange)="onSearchChange($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <!--takovej ten nacrt jak je u fb treba kdyz nefunguje net-->
+  <ion-list *ngIf="movies.length == 0">
+    <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label class="ion-text-capitalize">
+        <h2>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h2>
+        <p>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
   <ion-list>
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.imdbID]">
       
