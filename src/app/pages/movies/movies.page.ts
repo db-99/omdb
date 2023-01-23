@@ -42,8 +42,6 @@ export class MoviesPage implements OnInit {
       if (event)
         event.target.disabled = parseInt(res.totalResults, 10) <= this.currentPage*10;
 
-
-
     });
   }
 
@@ -51,11 +49,12 @@ export class MoviesPage implements OnInit {
   {
     this.title = e.detail.value;  // ve videu jede od indexu dal tak nevadi ze to dava do promenne, ale tady se musi hledat furt to same
     this.currentPage = 1;
-    console.log(this.currentPage);
+    // pridat scrollovani nahoru??
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
       if (res.Response == "True") // opet potreba osetrit
       {
         this.movies = res.Search;
+        console.log(res);
       }
       else
       {
