@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Search results</ion-title>
+    <ion-input placeholder="Search movies..." [(ngModel)]="title"></ion-input>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +21,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll (ionInfinite)="loadMovies(true, $event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more results...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
