@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { ReplaySubject } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -9,16 +10,18 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class HomePage implements OnInit {
   title: string = '';
-  history = ["1", "2", "3", "4", "5"];
+  history = [];
+  private historySubject = new ReplaySubject<any[]>(1);
 
   constructor(private router:Router, private storageService: StorageService) {
     this.storageService.getData('searches').then(searches => {
       if (!searches) {
-        searches = [];
-        console.log("zadny searches");
+        searches = this.history;
       }
-      console.log("searches existuji");
-      console.log(searches);
+      this.historySubject.next(searches);
+      console.log("history: " + this.history);
+      console.log("searches: " + searches);
+      console.log("history subject: " + this.historySubject);
       this.history = searches;
     });
   }
@@ -34,7 +37,7 @@ export class HomePage implements OnInit {
   // udelat routing pres funkci co se spusti po zmacknuti tlacitka, pred routingem ulozit do storage (zavolat setHome nebo routing async?)
   navigateSearch()
   {
-    //this.saveSearch();  // jestli bude fungovat tak pak zkusit takhle, zmenit i v html
+    this.saveSearch();  // jestli bude fungovat tak pak zkusit takhle, zmenit i v html; ano, funguje
     const params: NavigationExtras = {
       queryParams: { search: this.title },
     };
@@ -48,17 +51,11 @@ export class HomePage implements OnInit {
       this.history.splice(0, 0, this.title);
       this.history.pop();
       console.log("history length == 5");
+      console.log(this.history);
     }
     await this.storageService.saveData('searches', this.history);
-    console.log("pim");
-    //this.navigateSearch();
-    this.loadHistory();
-  }
-
-  async loadHistory()
-  {
-    this.history = await this.storageService.getData('searches');
+    this.historySubject.next(this.history);
     console.log(this.history);
+    //this.navigateSearch();
   }
-
 }
