@@ -13,8 +13,6 @@
     <h1 style="text-align: center; margin: 50px 0px">Search results</h1>
   </ion-text>
 
-
-  <!--takovej ten nacrt jak je u fb treba kdyz nefunguje net-->
   <ion-list *ngIf="movies.length == 0">
     <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
       <ion-thumbnail slot="start">
@@ -33,7 +31,6 @@
 
   <ion-list>
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.imdbID]">
-      
       <ion-thumbnail slot="start">
         <ion-img [src]="item.Poster" *ngIf="item.Poster != 'N/A'"></ion-img>
         <img src="https://i0.wp.com/www.kazi.org/wp-content/uploads/2019/03/no-image-available.png?ssl=1" *ngIf="item.Poster == 'N/A'"/>

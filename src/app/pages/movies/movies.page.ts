@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./movies.page.scss'],
 })
 export class MoviesPage implements OnInit {
-  movies: Search[] = [];  // import search a nahrada movies = []
+  movies: Search[] = [];
   currentPage = 1;
   title = 'jurassic';
   @ViewChild(IonContent, { read: IonContent }) content: IonContent;
@@ -28,15 +28,11 @@ export class MoviesPage implements OnInit {
           searches = this.history;
         }
         this.historySubject.next(searches);
-        console.log("history: " + this.history);
-        console.log("searches: " + searches);
-        console.log("history subject: " + this.historySubject);
         this.history = searches;
       });
     }
 
   ngOnInit() {
-    //const nevim = this.router.getCurrentNavigation()?.extras.state ?? "";
     this.title = this.route.snapshot.queryParamMap.get('search') ?? "";
     console.log(this.title);
     this.loadMovies();
@@ -44,13 +40,11 @@ export class MoviesPage implements OnInit {
 
   loadMovies(loadMore = false, event?: any)
   {
-    // nekde osetrit kdyz je response false, dat totalresults na 0 atd
     if (loadMore)
       this.currentPage++;
     if (event)
     {
       event.target.disabled = false;
-      console.log("ffjhfhfhg");
     }
 
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
@@ -73,16 +67,14 @@ export class MoviesPage implements OnInit {
 
       if (parseInt(res.totalResults, 10) <= this.currentPage*10)
         this.infScroll.disabled = true;
-      
     });
   }
 
   onSearchChange(e:any)
   {
-    this.content.scrollToTop(); // musel jsem vypnout strictPropertyInitialization v tsconfig.json
-    this.title = e.detail.value;  // ve videu jede od indexu dal tak nevadi ze to dava do promenne, ale tady se musi hledat furt to same
+    this.content.scrollToTop();
+    this.title = e.detail.value;
     this.currentPage = 1;
-    // pridat scrollovani nahoru??
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
       if (res.Response == "True") // opet potreba osetrit
       {
@@ -93,7 +85,7 @@ export class MoviesPage implements OnInit {
       {
         this.loadMovies();
       }
-      this.infScroll.disabled = false;  // avatar az do konce, pak indiana, nefunguje kdyz neni dost dlouhy (scroll nekdy nestaci)
+      this.infScroll.disabled = false;
     });
     this.saveSearch();
   }
@@ -105,7 +97,6 @@ export class MoviesPage implements OnInit {
       this.history.splice(0, 0, this.title);
       this.history.pop();
       console.log("history length == 5");
-      console.log(this.history);
     }
     await this.storageService.saveData('searches', this.history);
     this.historySubject.next(this.history);
