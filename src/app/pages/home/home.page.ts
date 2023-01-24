@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { IonItem } from '@ionic/angular';
 import { ReplaySubject } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -12,6 +13,7 @@ export class HomePage implements OnInit {
   title: string = '';
   history = [];
   private historySubject = new ReplaySubject<any[]>(1);
+  @ViewChild(IonItem) historyItem: IonItem;
 
   constructor(private router:Router, private storageService: StorageService) {
     this.storageService.getData('searches').then(searches => {
@@ -57,5 +59,12 @@ export class HomePage implements OnInit {
     this.historySubject.next(this.history);
     console.log(this.history);
     //this.navigateSearch();
+  }
+
+  navigateFromHistory(search: string)
+  {
+    this.title = search;
+    console.log(this.title);
+    this.navigateSearch();
   }
 }

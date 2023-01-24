@@ -28,7 +28,7 @@
   <ion-label class="ion-padding">Last searches:</ion-label>
   <div class="ion-padding">
     <ion-list>
-      <ion-item button *ngFor="let s of history" routerLink="/movies" [queryParams]="{search: s}">
+      <ion-item button *ngFor="let s of history" (click)="navigateFromHistory(s)">
         {{ s }}
       </ion-item>
     </ion-list>
