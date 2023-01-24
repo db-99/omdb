@@ -16,16 +16,7 @@ export class HomePage implements OnInit {
   @ViewChild(IonItem) historyItem: IonItem;
 
   constructor(private router:Router, private storageService: StorageService) {
-    this.storageService.getData('searches').then(searches => {
-      if (!searches) {
-        searches = this.history;
-      }
-      this.historySubject.next(searches);
-      console.log("history: " + this.history);
-      console.log("searches: " + searches);
-      console.log("history subject: " + this.historySubject);
-      this.history = searches;
-    });
+    this.loadHistory();
   }
 
   ngOnInit() {
@@ -66,5 +57,24 @@ export class HomePage implements OnInit {
     this.title = search;
     console.log(this.title);
     this.navigateSearch();
+  }
+
+  ionViewWillEnter()
+  {
+    this.loadHistory();
+  }
+
+  loadHistory()
+  {
+    this.storageService.getData('searches').then(searches => {
+      if (!searches) {
+        searches = this.history;
+      }
+      this.historySubject.next(searches);
+      console.log("history: " + this.history);
+      console.log("searches: " + searches);
+      console.log("history subject: " + this.historySubject);
+      this.history = searches;
+    });
   }
 }

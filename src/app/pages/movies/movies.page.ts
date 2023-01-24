@@ -111,5 +111,4 @@ export class MoviesPage implements OnInit {
     this.historySubject.next(this.history);
     console.log(this.history);
   }
-
 }
