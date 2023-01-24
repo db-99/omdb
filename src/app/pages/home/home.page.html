@@ -19,9 +19,17 @@
   
     <ion-card-content>
       <p style="text-align: center">Search movies using the OMDb API.</p>
-      <p style="text-align: center">Enter the name of a movie (or a part of it) and start searching.</p>
+      <!--<p style="text-align: center">Enter the name of a movie (or a part of it) and start searching.</p>-->
     </ion-card-content>
   </ion-card>
   <ion-searchbar placeholder="Search movies..." (ionChange)="onSearchChange($event)"></ion-searchbar>
-  <ion-button expand="full" routerLink="/movies" [queryParams]="{search: title}">Start searching!</ion-button>
+  <ion-button expand="full" routerLink="/movies" [queryParams]="{search: title}" style="margin-bottom: 50px">Start searching!</ion-button>
+  <ion-label class="ion-padding">Last searches:</ion-label>
+  <div class="ion-padding">
+    <ion-list>
+      <ion-item button *ngFor="let s of history" routerLink="/movies" [queryParams]="{search: s}">
+        {{ s }}
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

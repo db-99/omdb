@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
   title: string = '';
+  history = ["1", "2", "3", "4", "5"];
 
   constructor() { }
 
