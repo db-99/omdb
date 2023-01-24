@@ -17,10 +17,9 @@ export class StorageService {
   }
 
   async getData(key: string) {
-    const history = await Preferences.get({
+    const {value} = await Preferences.get({
       key
     });
-    if (history.value != null)
-      return JSON.parse(history.value);
+    return JSON.parse(value);
   }
 }
