@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { ReplaySubject } from 'rxjs';
 import { MovieService, Search } from 'src/app/services/movie.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-movies',
@@ -14,8 +16,24 @@ export class MoviesPage implements OnInit {
   title = 'jurassic';
   @ViewChild(IonContent, { read: IonContent }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infScroll: IonInfiniteScroll;
+  history = []; // pouze pro ucely ukladani
+  private historySubject = new ReplaySubject<any[]>(1);
 
-  constructor(private movieService: MovieService, private loadingCtrl: LoadingController, private router: Router, private route: ActivatedRoute) { }
+  constructor(private movieService: MovieService, private loadingCtrl: LoadingController,
+    private router: Router, private route: ActivatedRoute,
+    private storageService: StorageService) { 
+      // nacteni jenom aby se zaplnilo history tim co je ulozene
+      this.storageService.getData('searches').then(searches => {
+        if (!searches) {
+          searches = this.history;
+        }
+        this.historySubject.next(searches);
+        console.log("history: " + this.history);
+        console.log("searches: " + searches);
+        console.log("history subject: " + this.historySubject);
+        this.history = searches;
+      });
+    }
 
   ngOnInit() {
     //const nevim = this.router.getCurrentNavigation()?.extras.state ?? "";
@@ -77,7 +95,21 @@ export class MoviesPage implements OnInit {
       }
       this.infScroll.disabled = false;  // avatar az do konce, pak indiana, nefunguje kdyz neni dost dlouhy (scroll nekdy nestaci)
     });
+    this.saveSearch();
+  }
 
+  async saveSearch() {
+    if (this.history.length == 5)
+    {
+      // posunout vse o 1, na konec pridat posledni search
+      this.history.splice(0, 0, this.title);
+      this.history.pop();
+      console.log("history length == 5");
+      console.log(this.history);
+    }
+    await this.storageService.saveData('searches', this.history);
+    this.historySubject.next(this.history);
+    console.log(this.history);
   }
 
 }
