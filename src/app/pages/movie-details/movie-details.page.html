@@ -9,16 +9,11 @@
 
 <ion-content>
   <ion-card *ngIf="movie"><!--only display card if movie is set-->
-    <img [src]="movie.Poster"/>
+    <img [src]="movie.Poster" class="center"/>
 
     <ion-card-header>
       <ion-card-title> {{ movie.Title }} </ion-card-title>
-      <ion-card-subtitle> {{ movie.Year }} </ion-card-subtitle>
-      <ion-text color="tertiary">
-        <span *ngFor="let r of movie.Ratings; let isLast = last"><!--prochazet ratingy, pro kazdy vypsat zdroj + hodnotu-->
-          {{ r.Source + ": " + r.Value }} {{ !isLast ? ' - ' : '' }}<!--oddelit pomlckou, dokud nenarazi na posledni (isLast property)-->
-        </span>
-      </ion-text>
+      <ion-card-subtitle> {{ movie.Country }} </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <ion-label color="medium"> {{ movie.Plot }} </ion-label>
@@ -32,6 +27,12 @@
         <ion-icon name="cash-outline" slot="start"></ion-icon>
         <ion-label> {{ movie.BoxOffice }} </ion-label><!--mozna zmenit obe ikony?-->
       </ion-item>
+
+      <ion-list>
+        <ion-item *ngFor="let r of movie.Ratings">
+          {{ r.Source + ": " + r.Value }}
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

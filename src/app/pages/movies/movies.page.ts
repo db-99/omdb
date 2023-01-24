@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollCustomEvent, IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonContent, IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { MovieService, Search } from 'src/app/services/movie.service';
 
 @Component({
@@ -12,6 +12,8 @@ export class MoviesPage implements OnInit {
   movies: Search[] = [];  // import search a nahrada movies = []
   currentPage = 1;
   title = 'jurassic';
+  @ViewChild(IonContent, { read: IonContent }) content: IonContent;
+  @ViewChild(IonInfiniteScroll) infScroll: IonInfiniteScroll;
 
   constructor(private movieService: MovieService, private loadingCtrl: LoadingController, private router: Router, private route: ActivatedRoute) { }
 
@@ -27,6 +29,12 @@ export class MoviesPage implements OnInit {
     // nekde osetrit kdyz je response false, dat totalresults na 0 atd
     if (loadMore)
       this.currentPage++;
+    if (event)
+    {
+      event.target.disabled = false;
+      console.log("ffjhfhfhg");
+    }
+
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
       
       if (res.Response == "True") // kdyz neni response, tak neni ani Search[] nebo totalResults
@@ -41,16 +49,19 @@ export class MoviesPage implements OnInit {
       {
         this.movies = [];
       }
-
-      event?.target.complete();
+      
       if (event)
-        event.target.disabled = parseInt(res.totalResults, 10) <= this.currentPage*10;
+        event.target.complete();
 
+      if (parseInt(res.totalResults, 10) <= this.currentPage*10)
+        this.infScroll.disabled = true;
+      
     });
   }
 
   onSearchChange(e:any)
   {
+    this.content.scrollToTop(); // musel jsem vypnout strictPropertyInitialization v tsconfig.json
     this.title = e.detail.value;  // ve videu jede od indexu dal tak nevadi ze to dava do promenne, ale tady se musi hledat furt to same
     this.currentPage = 1;
     // pridat scrollovani nahoru??
@@ -62,9 +73,9 @@ export class MoviesPage implements OnInit {
       }
       else
       {
-        this.movies = [];
         this.loadMovies();
       }
+      this.infScroll.disabled = false;  // avatar az do konce, pak indiana, nefunguje kdyz neni dost dlouhy (scroll nekdy nestaci)
     });
 
   }

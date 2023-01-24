@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Search results</ion-title>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -9,6 +8,11 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-text>
+    <h1 style="text-align: center; margin: 50px 0px">Search results</h1>
+  </ion-text>
+
 
   <!--takovej ten nacrt jak je u fb treba kdyz nefunguje net-->
   <ion-list *ngIf="movies.length == 0">
