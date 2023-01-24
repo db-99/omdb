@@ -35,7 +35,8 @@
     <ion-item button *ngFor="let item of movies" [routerLink]="[item.imdbID]">
       
       <ion-thumbnail slot="start">
-        <ion-img [src]="item.Poster"></ion-img>
+        <ion-img [src]="item.Poster" *ngIf="item.Poster != 'N/A'"></ion-img>
+        <img src="https://i0.wp.com/www.kazi.org/wp-content/uploads/2019/03/no-image-available.png?ssl=1" *ngIf="item.Poster == 'N/A'"/>
       </ion-thumbnail>
 
       <ion-label>
