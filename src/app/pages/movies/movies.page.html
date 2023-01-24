@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-searchbar placeholder="Search movies..." (ionChange)="onSearchChange($event)"></ion-searchbar>
+    <ion-searchbar debounce="500" placeholder="Search movies..." (ionChange)="onSearchChange($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
