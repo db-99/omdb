@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
   constructor(private router:Router, private storageService: StorageService) {
     this.storageService.getData('searches').then(searches => {
       if (!searches) {
-        //searches = [];
+        searches = [];
         console.log("zadny searches");
       }
       console.log("searches existuji");
@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
   // udelat routing pres funkci co se spusti po zmacknuti tlacitka, pred routingem ulozit do storage (zavolat setHome nebo routing async?)
   navigateSearch()
   {
-    this.saveSearch();
+    //this.saveSearch();  // jestli bude fungovat tak pak zkusit takhle, zmenit i v html
     const params: NavigationExtras = {
       queryParams: { search: this.title },
     };
@@ -47,8 +47,11 @@ export class HomePage implements OnInit {
       // posunout vse o 1, na konec pridat posledni search
       this.history.splice(0, 0, this.title);
       this.history.pop();
+      console.log("history length == 5");
     }
     await this.storageService.saveData('searches', this.history);
+    console.log("pim");
+    this.navigateSearch();
   }
 
 }
