@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  title: string = '';
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSearchChange(e:any)
+  {
+    this.title = e.detail.value;
   }
 
 }

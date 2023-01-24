@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent, IonInfiniteScroll, LoadingController } from '@ionic/angular';
 import { MovieService, Search } from 'src/app/services/movie.service';
 
@@ -12,9 +13,12 @@ export class MoviesPage implements OnInit {
   currentPage = 1;
   title = 'jurassic';
 
-  constructor(private movieService: MovieService, private loadingCtrl: LoadingController) { }
+  constructor(private movieService: MovieService, private loadingCtrl: LoadingController, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    //const nevim = this.router.getCurrentNavigation()?.extras.state ?? "";
+    this.title = this.route.snapshot.queryParamMap.get('search') ?? "";
+    console.log(this.title);
     this.loadMovies();
   }
 

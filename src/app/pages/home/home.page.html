@@ -13,13 +13,14 @@
   </ion-text>
   <ion-card style="margin-bottom: 25px">
     <ion-card-header>
-      <ion-card-title style="text-align: center">Vyhledávání filmů</ion-card-title>
+      <ion-card-title style="text-align: center">Movie searching</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
-      <p style="text-align: center">Vyhledávejte filmy pomocí OMBD API.</p>
-      <p style="text-align: center">Do vyhledávacího pole zadejte název libovolného filmu.</p>
+      <p style="text-align: center">Search movies using the OMBD API.</p>
+      <p style="text-align: center">Enter the name (or a part of the name) of a movie and start searching.</p>
     </ion-card-content>
   </ion-card>
-  <ion-searchbar placeholder="Search movies..."></ion-searchbar>
+  <ion-searchbar placeholder="Search movies..." (ionChange)="onSearchChange($event)"></ion-searchbar>
+  <ion-button expand="full" routerLink="/movies" [queryParams]="{search: title}">Start searching!</ion-button>
 </ion-content>
