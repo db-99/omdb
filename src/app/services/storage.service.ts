@@ -17,12 +17,10 @@ export class StorageService {
   }
 
   async getData(key: string) {
-    const {value} = await Preferences.get({
+    const history = await Preferences.get({
       key
     });
-    if (value)
-      return JSON.parse(value);
-    else
-      return "";
+    if (history.value != null)
+      return JSON.parse(history.value);
   }
 }

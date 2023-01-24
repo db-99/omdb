@@ -51,7 +51,14 @@ export class HomePage implements OnInit {
     }
     await this.storageService.saveData('searches', this.history);
     console.log("pim");
-    this.navigateSearch();
+    //this.navigateSearch();
+    this.loadHistory();
+  }
+
+  async loadHistory()
+  {
+    this.history = await this.storageService.getData('searches');
+    console.log(this.history);
   }
 
 }
