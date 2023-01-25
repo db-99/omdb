@@ -24,8 +24,8 @@ export class MoviesPage implements OnInit {
     private storageService: StorageService) { 
       // nacteni jenom aby se zaplnilo history tim co uz je ulozene
       this.storageService.getData('searches').then(searches => {
-        if (!searches) {
-          searches = this.history;
+        if (!searches || searches.length == 0) {
+          searches = ["1","2","3","4","5"];
         }
         this.historySubject.next(searches);
         this.history = searches;

@@ -27,6 +27,7 @@ export class HomePage implements OnInit {
   {
     // kazdou zmenu textu ulozit do promenne
     this.title = e.detail.value;
+    console.log("changed to" + e.detail.value + "result: " + this.title);
   }
 
   navigateSearch()
@@ -71,13 +72,12 @@ export class HomePage implements OnInit {
   {
     // nacist ze storage do promenne
     this.storageService.getData('searches').then(searches => {
-      if (!searches) {
-        searches = this.history;
+      if (!searches || searches.length == 0) {
+        searches = ["1","2","3","4","5"];
       }
       this.historySubject.next(searches);
       console.log("history: " + this.history);
       console.log("searches: " + searches);
-      console.log("history subject: " + this.historySubject);
       this.history = searches;
     });
   }
