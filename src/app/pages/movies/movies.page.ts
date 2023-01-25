@@ -77,7 +77,9 @@ export class MoviesPage implements OnInit {
   {
     // scrollovat nahoru, jinak to pokracuje nekde dole a je to otravne
     this.content.scrollToTop();
-    this.title = e.detail.value;
+    let s = e.detail.value.trim();
+    console.log(s);
+    this.title = s;
     this.currentPage = 1;
     // vyhledat novy nazev
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {

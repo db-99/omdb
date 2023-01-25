@@ -26,8 +26,10 @@ export class HomePage implements OnInit {
   onSearchChange(e:any)
   {
     // kazdou zmenu textu ulozit do promenne
-    this.title = e.detail.value;
-    console.log("changed to" + e.detail.value + "result: " + this.title);
+    let s = e.detail.value.trim();
+    console.log(s);
+    this.title = s;
+    console.log("changed to" + s + "result: " + this.title);
   }
 
   navigateSearch()
