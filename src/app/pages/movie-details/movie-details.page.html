@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card *ngIf="movie"><!--zobrazit jenom kdyz existuje movie-->
     <img [src]="movie.Poster" class="center" *ngIf="movie.Poster != 'N/A'"/>
-    <img src="https://i0.wp.com/www.kazi.org/wp-content/uploads/2019/03/no-image-available.png?ssl=1" class="center" *ngIf="movie.Poster == 'N/A'"/>
+    <img src="https://i.imgur.com/3Jr3B8z.png" class="center" *ngIf="movie.Poster == 'N/A'"/>
 
     <ion-card-header>
       <ion-card-title> {{ movie.Title }} </ion-card-title>
