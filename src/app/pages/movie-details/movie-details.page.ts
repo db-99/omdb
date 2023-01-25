@@ -8,24 +8,19 @@ import { MovieService } from 'src/app/services/movie.service';
   styleUrls: ['./movie-details.page.scss'],
 })
 export class MovieDetailsPage implements OnInit {
-  movie:any = null; // movie = null by akceptovalo jenom null, pak misto any predelat na vhodny objekt
+  movie:any = null;
 
-  // inject the current activatedroute - we get information about the part after /
+  // injectovat activatedroute ze kteryho dostanem cast za /
   constructor(private route: ActivatedRoute, private movieService: MovieService) { }
 
   ngOnInit() {
+    // ziskat id filmu
     const id = this.route.snapshot.paramMap.get('id') ?? "";  // nejaka fixni hodnota kdyby to bylo null, jinak error
     console.log(id);
+    // ziskat data o filmu s timhle id
     this.movieService.getMovieDetails(id).subscribe(res => {
       console.log(res);
       this.movie = res;
     })
   }
-
-  // moc nefunguje na mobilu, nativni veci pres capacitor
-  /*openWebsite()
-  {
-    window.open(this.movie.Website);
-  }*/
-
 }

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="movie"><!--only display card if movie is set-->
+  <ion-card *ngIf="movie"><!--zobrazit jenom kdyz existuje movie-->
     <img [src]="movie.Poster" class="center" *ngIf="movie.Poster != 'N/A'"/>
     <img src="https://i0.wp.com/www.kazi.org/wp-content/uploads/2019/03/no-image-available.png?ssl=1" class="center" *ngIf="movie.Poster == 'N/A'"/>
 
@@ -17,6 +17,7 @@
       <ion-card-subtitle *ngIf="movie.Genre != 'N/A'"> {{ movie.Genre }} </ion-card-subtitle>
       <ion-card-subtitle *ngIf="movie.Country != 'N/A'"> {{ movie.Country }} </ion-card-subtitle>
     </ion-card-header>
+
     <ion-card-content>
       <p *ngIf="movie.Plot != 'N/A'"><ion-label color="medium"> {{ movie.Plot }} </ion-label></p><br>
       <p *ngIf="movie.Director != 'N/A'"><ion-label color="medium">Director: {{ movie.Director }} </ion-label></p>
@@ -61,12 +62,7 @@
           {{ r.Source + ": " + r.Value }}
         </ion-item>
       </ion-list>
+
     </ion-card-content>
   </ion-card>
 </ion-content>
-<!-- moc nefunguje na mobilu, viz movie-details.page.ts
-<ion-footer>
-  <ion-button expand="full" (click)="openWebsite()">
-    Open movie website
-  </ion-button>
-</ion-footer>-->

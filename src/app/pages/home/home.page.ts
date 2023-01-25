@@ -16,6 +16,7 @@ export class HomePage implements OnInit {
   @ViewChild(IonItem) historyItem: IonItem;
 
   constructor(private router:Router, private storageService: StorageService) {
+    // na zacatku nacist historii
     this.loadHistory();
   }
 
@@ -24,23 +25,24 @@ export class HomePage implements OnInit {
 
   onSearchChange(e:any)
   {
+    // kazdou zmenu textu ulozit do promenne
     this.title = e.detail.value;
   }
 
-  // udelat routing pres funkci co se spusti po zmacknuti tlacitka, pred routingem ulozit do storage (zavolat setHome nebo routing async?)
   navigateSearch()
   {
-    this.saveSearch();  // jestli bude fungovat tak pak zkusit takhle, zmenit i v html; ano, funguje
+    // ulozit a presunout se na stranku s filmama
+    this.saveSearch();
     const params: NavigationExtras = {
-      queryParams: { search: this.title },
+      queryParams: { search: this.title },  // predat nazev filmu
     };
     this.router.navigate(['/movies'], params);
   }
 
   async saveSearch() {
-    if (this.history.length == 5)
+    if (this.history.length == 5) // 5 poslednich hledani staci
     {
-      // posunout vse o 1, na konec pridat posledni search
+      // posunout vse o 1, na zacatek pridat posledni search, nejstarsi smazat
       this.history.splice(0, 0, this.title);
       this.history.pop();
       console.log("history length == 5");
@@ -49,11 +51,11 @@ export class HomePage implements OnInit {
     await this.storageService.saveData('searches', this.history);
     this.historySubject.next(this.history);
     console.log(this.history);
-    //this.navigateSearch();
   }
 
   navigateFromHistory(search: string)
   {
+    // predat nazev filmu do promenne, pak klasicky ulozit a prejit
     this.title = search;
     console.log(this.title);
     this.navigateSearch();
@@ -61,11 +63,13 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter()
   {
+    // at se nacte historie i kdyz se da zpet z hledani
     this.loadHistory();
   }
 
   loadHistory()
   {
+    // nacist ze storage do promenne
     this.storageService.getData('searches').then(searches => {
       if (!searches) {
         searches = this.history;

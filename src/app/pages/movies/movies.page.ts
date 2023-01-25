@@ -22,7 +22,7 @@ export class MoviesPage implements OnInit {
   constructor(private movieService: MovieService, private loadingCtrl: LoadingController,
     private router: Router, private route: ActivatedRoute,
     private storageService: StorageService) { 
-      // nacteni jenom aby se zaplnilo history tim co je ulozene
+      // nacteni jenom aby se zaplnilo history tim co uz je ulozene
       this.storageService.getData('searches').then(searches => {
         if (!searches) {
           searches = this.history;
@@ -33,6 +33,7 @@ export class MoviesPage implements OnInit {
     }
 
   ngOnInit() {
+    // dostat z url vyhledavany string, jenom na zacatku, pak to jede ze search baru
     this.title = this.route.snapshot.queryParamMap.get('search') ?? "";
     console.log(this.title);
     this.loadMovies();
@@ -40,6 +41,7 @@ export class MoviesPage implements OnInit {
 
   loadMovies(loadMore = false, event?: any)
   {
+    // loadMore jenom kdyz se to aktivuje infinite scrollem
     if (loadMore)
       this.currentPage++;
     if (event)
@@ -51,6 +53,7 @@ export class MoviesPage implements OnInit {
       
       if (res.Response == "True") // kdyz neni response, tak neni ani Search[] nebo totalResults
       {
+        // kdyz se jede dal, tak se nove vysledky pridaji ke starym, jinak movies=vysledky
         if (this.currentPage > 1)
           this.movies.push(...res.Search);
         else
@@ -64,7 +67,7 @@ export class MoviesPage implements OnInit {
       
       if (event)
         event.target.complete();
-
+      // vypnout pokud jsme na konci
       if (parseInt(res.totalResults, 10) <= this.currentPage*10)
         this.infScroll.disabled = true;
     });
@@ -72,9 +75,11 @@ export class MoviesPage implements OnInit {
 
   onSearchChange(e:any)
   {
+    // scrollovat nahoru, jinak to pokracuje nekde dole a je to otravne
     this.content.scrollToTop();
     this.title = e.detail.value;
     this.currentPage = 1;
+    // vyhledat novy nazev
     this.movieService.getSearchResults(this.title, this.currentPage).subscribe((res) => {
       if (res.Response == "True") // opet potreba osetrit
       {
@@ -91,6 +96,7 @@ export class MoviesPage implements OnInit {
   }
 
   async saveSearch() {
+    // ukladat vyhledavane vyrazy
     if (this.history.length == 5)
     {
       // posunout vse o 1, na konec pridat posledni search
